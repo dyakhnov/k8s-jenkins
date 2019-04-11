@@ -1,4 +1,4 @@
-FROM jenkins/jenkins:2.171-alpine
+FROM jenkins/jenkins:2.172-alpine
 
 ENV JAVA_OPTS="-Djenkins.install.runSetupWizard=false"
 
