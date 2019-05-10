@@ -10,3 +10,6 @@ docker push mytardis/k8s-jenkins:latest
 kubectl -n jenkins scale statefulset.apps/jenkins --replicas=0
 sleep 3
 kubectl -n jenkins scale statefulset.apps/jenkins --replicas=1
+
+# Watch
+watch kubectl -n jenkins get pods
