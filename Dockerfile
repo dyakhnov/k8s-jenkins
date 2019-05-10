@@ -1,8 +1,21 @@
-FROM jenkins/jenkins:2.176-alpine
+FROM jenkins/jnlp-slave:alpine
 
-ENV JAVA_OPTS="-Djenkins.install.runSetupWizard=false"
+ENV VERSION 0.6.0
 
-COPY *.groovy /usr/share/jenkins/ref/init.groovy.d/
-COPY plugins.txt /usr/share/jenkins/ref/plugins.txt
+USER root
 
-RUN /usr/local/bin/install-plugins.sh < /usr/share/jenkins/ref/plugins.txt
+RUN apk --update add \
+	bash \
+	curl \
+	git \
+	g++ \
+	make \
+	openssh \
+	openssl \
+	openssl-dev \
+	&& rm -rf /var/cache/apk/*
+
+RUN curl -L https://github.com/AGWA/git-crypt/archive/$VERSION.tar.gz | tar zxv -C /var/tmp
+RUN cd /var/tmp/git-crypt-$VERSION && make && make install PREFIX=/usr/local
+
+USER jenkins

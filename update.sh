@@ -1,15 +1,7 @@
 #!/bin/sh
 
 # Build
-docker build . -t mytardis/k8s-jenkins:latest
+docker build . -t mytardis/k8s-jenkins-slave:latest
 
 # Push
-docker push mytardis/k8s-jenkins:latest
-
-# Update
-kubectl -n jenkins scale statefulset.apps/jenkins --replicas=0
-sleep 3
-kubectl -n jenkins scale statefulset.apps/jenkins --replicas=1
-
-# Watch
-watch kubectl -n jenkins get pods
+docker push mytardis/k8s-jenkins-slave:latest
